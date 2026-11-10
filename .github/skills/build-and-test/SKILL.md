@@ -24,7 +24,7 @@ description: Налаштовує складання і тестування Typ
 - `tsconfig.json` з `rootDir: "src"`, `outDir: "build"`, `module: "Node16"` і `moduleResolution: "Node16"`;
 - `tests/math.test.ts` з тестом `BasicAddition`, який перевіряє `add(2, 3) = 5`;
 - `ci.bat`, який послідовно запускає `npm install`, `npm run build`, `npm test` і зупиняється на першій помилці;
-- `ci.sh` з тією самою послідовністю та режимом завершення при першій помилці.
+- `ci.sh` з тією самою послідовністю та режимом завершення при першій помилці. Unix CI має запускатися як `sh ./ci.sh`, а не через прямий виклик `./ci.sh`, оскільки створений файл може не мати executable-біта після checkout.
 
 ## Як перевірити
 
@@ -32,7 +32,7 @@ description: Налаштовує складання і тестування Typ
 2. Виконати `npm run build` і переконатися, що TypeScript створює `build`.
 3. Виконати `npm test` і перевірити проходження `BasicAddition`.
 4. Виконати `npm start` та перевірити виведення Hello World.
-5. Запустити `ci.bat` у Windows або `./ci.sh` у Linux/macOS.
+5. Запустити `ci.bat` у Windows або `sh ./ci.sh` у Linux/macOS; перевірити саме такий виклик у workflow.
 6. Перевірити, що кожен CI-скрипт завершується одразу після команди з ненульовим кодом.
 
 ## Що робити при помилці

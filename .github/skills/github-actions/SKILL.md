@@ -23,18 +23,18 @@ description: Створює GitHub Actions CI для перевірки TypeScri
   - matrix `os`: `ubuntu-latest`, `windows-latest`, `macos-latest`;
   - `fail-fast: false`;
   - кроками checkout і setup-node;
-  - запуском тільки `./ci.sh` на Linux та macOS;
+  - запуском тільки `sh ./ci.sh` на Linux та macOS, без залежності від executable-біта файла;
   - запуском `ci.bat` із `shell: cmd` на Windows;
   - кроком `upload-artifact` для папки `build`.
 
-Для Linux і macOS workflow не дублює команди build/test, а викликає лише `ci.sh`. Для Windows викликається лише `ci.bat`.
+Для Linux і macOS workflow не дублює команди build/test, а викликає лише `sh ./ci.sh`. Прямий виклик `./ci.sh` не використовувати: після checkout файл може не мати executable-біта й завершитися з кодом 126. Для Windows викликається лише `ci.bat`.
 
 ## Як перевірити
 
 1. Перевірити синтаксис і структуру `.github/workflows/ci.yml`.
 2. Переконатися, що три платформи присутні в matrix, а `fail-fast` дорівнює `false`.
 3. Переконатися, що `checkout` і `setup-node` виконуються перед платформним скриптом.
-4. Переконатися, що Linux/macOS запускають лише `ci.sh`, а Windows — `ci.bat` із `shell: cmd`.
+4. Переконатися, що Linux/macOS запускають лише `sh ./ci.sh`, а Windows — `ci.bat` із `shell: cmd`.
 5. Перевірити, що `upload-artifact` завантажує `build` після успішного складання.
 6. Перевірити workflow у GitHub Actions на push і pull request.
 
