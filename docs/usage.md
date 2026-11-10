@@ -29,7 +29,9 @@ npm.cmd test
 У Linux або macOS виконайте:
 
 ```bash
-bash ci.sh
+sh ./ci.sh
 ```
 
 Скрипти послідовно встановлюють залежності, збирають TypeScript і запускають Vitest. Вони зупиняються на першій помилці. Після успішної перевірки `npm start` запускає зібраний Hello World.
+
+У GitHub Actions для Linux і macOS використовується такий самий виклик `sh ./ci.sh`; це не залежить від executable-біта файла після checkout. Windows запускає `ci.bat` через `shell: cmd`.
