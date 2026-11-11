@@ -8,7 +8,7 @@
 
 | Skill | Призначення |
 | --- | --- |
-| `project-scaffold` | Створює структуру TypeScript-проєкту, package-конфігурацію та npm scripts. |
+| `project-scaffold` | Створює `src/hello.ts`, `src/math.ts` і базовий `.gitignore`. |
 | `build-and-test` | Налаштовує складання і Vitest та запускає локальні перевірки. |
 | `github-actions` | Створює workflow CI для перевірки проєкту в GitHub Actions. |
 
@@ -46,6 +46,13 @@
 | `docs/architecture.md` | Архітектура агента, опис команд, обробка помилок і карта файлів. |
 | `package.json` | Метадані проєкту та npm scripts. |
 | `tsconfig.json` | Правила компіляції TypeScript. |
-| `src/index.ts` | Реалізація Hello World. |
-| `tests/index.test.ts` | Тест поведінки Hello World на Vitest. |
-| `.github/workflows/ci.yml` | Кроки CI для встановлення, складання і тестування. |
+| `src/hello.ts` | Реалізація Hello World. |
+| `src/math.ts` | Функція `add` для додавання двох чисел. |
+| `tests/math.test.ts` | Тест `BasicAddition` для функції `add`. |
+| `ci.bat` | Windows-послідовність `npm install`, build і test. |
+| `ci.sh` | Unix-послідовність `npm install`, build і test. У workflow запускається через `sh ./ci.sh`. |
+| `.github/workflows/ci.yml` | CI на Ubuntu, Windows і macOS з upload artifact для `build`. |
+
+## Компіляція і виконання
+
+`tsconfig.json` використовує `src` як `rootDir`, `build` як `outDir`, а `module` і `moduleResolution` мають значення `Node16`. Scripts у `package.json` запускають `tsc`, `vitest run` і `node build/hello.js` відповідно.

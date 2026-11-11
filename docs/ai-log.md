@@ -23,3 +23,19 @@
 - **Результат:** Створено prompts `git-init`, `create-project`, `create-build`, `create-actions`, `check`, `init`, документацію запуску та журнал.
 - **Помилки:** Не було.
 - **Рішення:** Для prompt-файлів використано frontmatter з `description` і `agent: build-engineer`; команди описано як ідемпотентні.
+
+## Запит 4
+
+- **Дата:** 2026-11-10
+- **Запит:** Виправити падіння GitHub Actions на Ubuntu та macOS і не допустити повторення помилки в інструкціях агента.
+- **Помилка:** Unix-крок workflow запускав `./ci.sh`, але файл не мав executable-біта після checkout, що спричинило `exit code 126` на Ubuntu. Такий прямий виклик також був непереносимим для macOS; Unix job завершився з `exit code 1`.
+- **Виправлення:** Workflow змінено на `sh ./ci.sh`. Skills `build-and-test` і `github-actions`, а також агент `build-engineer` тепер вимагають явний запуск через `sh` та перевірку цього виклику. Windows-скрипт залишено без змін.
+- **Перевірка:** YAML і змінені файли не мають діагностичних помилок; повторна Unix-перевірка має виконуватися в GitHub Actions через POSIX shell.
+
+## Запит 5
+
+- **Дата:** 2026-11-10
+- **Запит:** Перевірити відповідність `README.md`, `docs/architecture.md` і `docs/usage.md` реальним файлам проєкту.
+- **Розбіжності:** `docs/architecture.md` посилався на неіснуючі `src/index.ts` і `tests/index.test.ts`, а також помилково приписував `project-scaffold` створення `package.json` і npm scripts. `docs/usage.md` використовував `bash ci.sh` замість узгодженого `sh ./ci.sh`. `README.md` не містив актуальної структури файлів і npm-команд.
+- **Виправлення:** Документацію оновлено відповідно до `src/hello.ts`, `src/math.ts`, `tests/math.test.ts`, `package.json`, `tsconfig.json`, `ci.bat`, `ci.sh` і workflow з трьома ОС.
+- **Перевірка:** Зіставлено документацію з фактичними файлами; build, тести та Unix/Windows CI-скрипти залишаються успішними.
